@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IMapRoute, IMapServiceInterruption, IStop } from "../../utils/interfaces";
+import { IMapRoute, IMapServiceInterruption, IOptionDetail, IStop, SearchSuggestion } from "../../utils/interfaces";
 import { Theme, lightMode } from "../theme";
 
 interface AppState {
@@ -22,9 +22,9 @@ interface AppState {
     selectedStop: IStop | null,
     setSelectedStop: (selectedStop: IStop | null) => void,
     
-    // TODO: Switch to ContextProvider Functions
-    presentSheet: (sheet: "routeDetails" | "alerts" | "stopTimetable" | "settings" | "alertsDetail") => void
-    setPresentSheet: (presentSheet: (sheet: "routeDetails" | "alerts" | "stopTimetable" | "settings" | "alertsDetail") => void) => void
+    // TODO: Switch to Provider Functions
+    presentSheet: (sheet: "routeDetails" | "alerts" | "stopTimetable" | "settings" | "alertsDetail" | "inputRoute" | "tripPlanDetail") => void
+    setPresentSheet: (presentSheet: (sheet: "routeDetails" | "alerts" | "stopTimetable" | "settings" | "alertsDetail" | "inputRoute" | "tripPlanDetail") => void) => void
 
     selectedAlert: IMapServiceInterruption | null,
     setSelectedAlert: (selectedAlert: IMapServiceInterruption | null) => void
@@ -41,6 +41,16 @@ interface AppState {
 
     scrollToStop: (stop: IStop) => void
     setScrollToStop: (scrollToStop: (stop: IStop) => void) => void
+
+    // route planning
+    suggestions: SearchSuggestion[]
+    setSuggestions: (suggestions: SearchSuggestion[]) => void
+
+    suggestionOutput: "start" | "end" | null
+    setSuggestionOutput: (suggestionOutput: "start" | "end" | null) => void
+
+    selectedRoutePlan: IOptionDetail | null,
+    setSelectedRoutePlan: (selectedRoutePlan: IOptionDetail | null) => void
 }
 
 const useAppStore = create<AppState>()((set) => ({
@@ -80,7 +90,17 @@ const useAppStore = create<AppState>()((set) => ({
     setPoppedUpStopCallout: (poppedUpStopCallout) => set(() => ({ poppedUpStopCallout })),
 
     scrollToStop: (stop) => {console.log(stop)},
-    setScrollToStop: (scrollToStop) => set(() => ({ scrollToStop: scrollToStop }))
+    setScrollToStop: (scrollToStop) => set(() => ({ scrollToStop: scrollToStop })),
+
+    // route planning
+    suggestions: [],
+    setSuggestions: (suggestions) => set(() => ({ suggestions })),
+
+    suggestionOutput: null,
+    setSuggestionOutput: (suggestionOutput) => set(() => ({ suggestionOutput })),
+
+    selectedRoutePlan: null,
+    setSelectedRoutePlan: (selectedRoutePlan) => set(() => ({ selectedRoutePlan })),
 }));
 
 export default useAppStore;

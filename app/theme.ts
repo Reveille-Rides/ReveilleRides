@@ -7,11 +7,13 @@ export interface Theme {
     exitButton: string,
     nextStopBubble: string,
     secondaryBackground: string,
+    tertiaryBackground: string,
     alertSymbol: string,
     starColor: string,
     timetableRowA: string,
     timetableRowB: string,
     pillBorder: string,
+    myLocation: string,
     busTints: {[key: string] : string}
 }
 
@@ -24,11 +26,13 @@ export const lightMode: Theme = {
     exitButton: 'gray',
     nextStopBubble: 'lightgrey',
     secondaryBackground: '#f3f1f6',
+    tertiaryBackground: '#f3f1f6',
     alertSymbol: '#FFC700',
     starColor: '#ffcc00',
     timetableRowA: 'white',
     timetableRowB: '#efefef',
     pillBorder: 'lightgrey',
+    myLocation: "#007afe",
     busTints: {
         "47": "#2e8545",
     }
@@ -43,11 +47,13 @@ export const darkMode: Theme = {
     exitButton: 'gray',
     nextStopBubble: '#48484a',
     secondaryBackground: '#48484a',
+    tertiaryBackground: '#2c2c2e',
     alertSymbol: '#ffce0a',
     starColor: '#ffd60a',
     timetableRowA: '#1c1c1e',
     timetableRowB: '#2c2c2e',
     pillBorder: '#686867',
+    myLocation: "#0a84ff",
     busTints: {
         "01-04": "#fe453a",
         "03": "#03a8e4",

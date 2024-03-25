@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Dimensions, TouchableOpacity } from "react-native";
+import { Dimensions, TouchableOpacity, View } from "react-native";
 import MapView, { LatLng, Polyline, Region } from 'react-native-maps';
 import * as Location from 'expo-location';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -8,6 +8,7 @@ import useAppStore from "../../data/app_state";
 import BusMarker from "./markers/BusMarker";
 import StopMarker from "./markers/StopMarker";
 import { useVehicles } from "../../data/api_query";
+import { FontAwesome6 } from "@expo/vector-icons";
 
 const Map: React.FC = () => {
     const mapViewRef = useRef<MapView>(null);
@@ -220,7 +221,8 @@ const Map: React.FC = () => {
                 })}
             </MapView>
 
-            <TouchableOpacity 
+            {/* map buttons */}
+            <View
                 style={{ 
                     top: 60, 
                     alignContent: 'center', 
@@ -230,17 +232,26 @@ const Map: React.FC = () => {
                     overflow: 'hidden', 
                     borderRadius: 8, 
                     backgroundColor: theme.background, 
-                    padding: 12, 
-                    zIndex: 10000,
+                    padding: 12,
+                    zIndex: 1000,
                 }} 
-                onPress={() => recenterView()}
             >
-                {isViewCenteredOnUser ?
-                    <MaterialIcons name="my-location" size={24} color="gray" />
-                    :
-                    <MaterialIcons name="location-searching" size={24} color="gray" />
-                }
-            </TouchableOpacity>
+                <TouchableOpacity onPress={() => recenterView()}>
+                    {isViewCenteredOnUser ?
+                        <MaterialIcons name="my-location" size={24} color="gray" />
+                        :
+                        <MaterialIcons name="location-searching" size={24} color="gray" />
+                    }
+                </TouchableOpacity>
+
+                {/* Divider */}
+                <View style={{ height: 1, backgroundColor: theme.divider, marginVertical: 8, marginHorizontal: -2 }} />
+
+                <TouchableOpacity onPress={() => presentSheet("inputRoute")}>
+                    <FontAwesome6 name="diamond-turn-right" size={24} color="gray" />
+                </TouchableOpacity>
+            </View>
+            
         </>
     )
 }

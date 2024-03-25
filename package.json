@@ -1,5 +1,5 @@
 {
-  "name": "ReveilleRides",
+  "name": "Reveille Rides",
   "version": "1.0.0",
   "main": "Main.tsx",
   "scripts": {
@@ -21,7 +21,7 @@
     "@react-native-async-storage/async-storage": "^1.19.3",
     "@react-native-segmented-control/segmented-control": "2.4.1",
     "@tanstack/react-query": "^5.22.2",
-    "aggie-spirit-api": "^1.0.2",
+    "aggie-spirit-api": "github:Reveille-Rides/aggie-spirit-api#route-planning-api",
     "expo": "^50.0.7",
     "expo-constants": "~15.4.5",
     "expo-linking": "~6.2.2",
@@ -41,6 +41,7 @@
     "react-native-render-html": "^6.3.4",
     "react-native-safe-area-context": "4.8.2",
     "react-native-screens": "~3.29.0",
+    "react-native-timeline-flatlist": "^0.8.0",
     "react-native-web": "~0.19.6",
     "zod": "^3.22.4",
     "zustand": "^4.4.6"

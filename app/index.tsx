@@ -13,6 +13,8 @@ import { darkMode, lightMode } from './theme';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { getColorScheme } from './utils';
+import InputRoute from './components/sheets/route_planning/InputRoute';
+import TripPlanDetail from './components/sheets/route_planning/TripPlanDetail';
 
 const Home = () => {
     const setPresentSheet = useAppStore((state) => state.setPresentSheet);
@@ -24,6 +26,10 @@ const Home = () => {
     const routeDetailSheetRef = useRef<BottomSheetModal>(null);
     const stopTimetableSheetRef = useRef<BottomSheetModal>(null);
     const settingsSheetRef = useRef<BottomSheetModal>(null);
+
+    // Route Planning
+    const inputRouteSheetRef = useRef<BottomSheetModal>(null);
+    const tripPlanDetailSheetRef = useRef<BottomSheetModal>(null);
 
     setPresentSheet((sheet) => {
         switch (sheet) {
@@ -41,6 +47,12 @@ const Home = () => {
                 break;
             case "alertsDetail":
                 alertDetailSheetRef.current?.present();
+                break;
+            case "inputRoute":
+                inputRouteSheetRef.current?.present();
+                break;
+            case "tripPlanDetail":
+                tripPlanDetailSheetRef.current?.present();
                 break;
             default:
                 break;
@@ -75,6 +87,10 @@ const Home = () => {
                         <AlertList sheetRef={alertListSheetRef} />
                         <AlertDetail sheetRef={alertDetailSheetRef} />
                         <StopTimetable sheetRef={stopTimetableSheetRef} />
+
+                        {/* Route Planning */}
+                        <InputRoute sheetRef={inputRouteSheetRef} />
+                        <TripPlanDetail sheetRef={tripPlanDetailSheetRef} />
                     </View>
                 </BottomSheetModalProvider>
             </GestureHandlerRootView>

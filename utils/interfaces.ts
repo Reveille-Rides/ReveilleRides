@@ -256,3 +256,169 @@ export interface ICachedStopEstimate {
     stopCode: string,
     departureTimes: IGetNextDepartTimesResponse
 };
+
+// route planning
+
+export const FoundStopSchema = z.object({
+    stopCode: z.string(),
+    stopName: z.string(),
+    longitude: z.number(),
+    latitude: z.number()
+});
+export type IFoundStop = z.infer<typeof FoundStopSchema>
+
+export const MatchedSubstringSchema = z.object({
+    length: z.number(),
+    offset: z.number()
+});
+export type IMatchedSubstring = z.infer<typeof MatchedSubstringSchema>
+
+export const LocationTermsSchema = z.object({
+    offset: z.number(),
+    value: z.string()
+});
+export type ILocationTerms = z.infer<typeof LocationTermsSchema>
+
+export const FoundLocationSchema = z.object({
+    description: z.string(),
+    matchedSubstrings: z.array(MatchedSubstringSchema),
+    place_id: z.string(),
+    reference: z.string(),
+    structured_formatting: z.object({
+        main_text: z.string(),
+        main_text_matched_substrings: z.array(MatchedSubstringSchema),
+        secondary_text: z.string()
+    }),
+    terms: z.array(LocationTermsSchema),
+    types: z.array(z.string())
+});
+export type IFoundLocation = z.infer<typeof FoundLocationSchema>
+
+export const EndpointSchema = z.object({
+    title: z.string(),
+    subtitle: z.string(),
+    lat: z.number().optional(),
+    long: z.number().optional(),
+    stopCode: z.string().optional(),
+    placeId: z.string().optional()
+});
+export type IEndpoint = z.infer<typeof EndpointSchema>
+
+export const PlanBlockSchema = z.object({
+    className: z.string(),
+    iconString: z.string(),
+    leftPosition: z.number(),
+    routeShortName: z.string().nullable(),
+    stepType: z.number(),
+    topPosition: z.number(),
+    width: z.number()
+});
+export type IPlanBlock = z.infer<typeof PlanBlockSchema>
+
+export const ChartLinePositionSchema = z.object({
+    leftPosition: z.number(),
+    timeLabel: z.string()
+});
+export type IChartLinePosition = z.infer<typeof ChartLinePositionSchema>
+
+export const OptionBlockSchema = z.object({
+    leavingIn: z.string(),
+    leftPosition: z.number(),
+    topPosition: z.number(),
+    totalMinute: z.string(),
+    width: z.number()
+});
+export type IOptionBlock = z.infer<typeof OptionBlockSchema>
+
+export const WalkingInstructionSchema = z.object({
+    index: z.number(),
+    instruction: z.string(),
+    polyline: z.string()
+});
+export type IWalkingInstruction = z.infer<typeof WalkingInstructionSchema>
+
+
+export const InstructionStepSchema = z.object({
+    className: z.string(),
+    duration: z.string().nullable(),
+    iconClassName: z.string().nullable(),
+    instruction: z.string().optional(),
+    latitude: z.number(),
+    longitude: z.number(),
+    polyline: z.string().nullable(),
+    routeShortName: z.string().nullable(),
+    startTime: z.string(),
+    stepType: z.number(),
+    walkingInstructions: z.array(WalkingInstructionSchema)
+});
+export type IInstructionStep = z.infer<typeof InstructionStepSchema>
+
+export const Agency = z.object({
+    agencyName: z.string(),
+    agencyUrl: z.string().optional()
+});
+export type IAgency = z.infer<typeof Agency>
+
+export const OptionDetailSchema = z.object({
+    agencies: z.array(Agency),
+    copyrights: z.string(),
+    endTime: z.number(),
+    endTimeText: z.string(),
+    instructions: z.array(InstructionStepSchema),
+    mapBounds: z.object({
+        neLatitude: z.number(),
+        neLongitude: z.number(),
+        swLatitude: z.number(),
+        swLongitude: z.number()
+    }),
+    optionIndex: z.number(),
+    startTime: z.number(),
+    startTimeText: z.string(),
+    totalTime: z.string(),
+    totalWalkingDistance: z.string(),
+    totalWalkingTime: z.string(),
+    warnings: z.array(z.string())
+});
+export type IOptionDetail = z.infer<typeof OptionDetailSchema>
+
+export const OptionPositionSchema = z.object({
+    optionIndex: z.number(),
+    topPosition: z.number(),
+    optionSummary: z.string()
+});
+
+export const FindBusStopsResponseSchema = z.array(FoundStopSchema);
+export type IFindBusStopsResponse = z.infer<typeof FindBusStopsResponseSchema>
+
+export const FindLocationsResponseSchema = z.array(FoundLocationSchema);
+export type IFindLocationsResponse = z.infer<typeof FindLocationsResponseSchema>
+
+export const GetTripPlanResponseSchema = z.object({
+    blocks: z.array(PlanBlockSchema),
+    chartHeight: z.number(),
+    chartLinePositions: z.array(ChartLinePositionSchema).nullable(),
+    headerHeight: z.number(),
+    optionBlocks: z.array(OptionBlockSchema),
+    optionDetails: z.array(OptionDetailSchema),
+    optionHeight: z.number(),
+    optionPositions: z.array(OptionPositionSchema),
+    resultCount: z.number()
+});
+export type ITripPlanResponse = z.infer<typeof GetTripPlanResponseSchema>
+
+
+export interface SearchSuggestion {
+    title: string
+    subtitle: string
+    lat?: number
+    long?: number
+    stopCode?: string
+    placeId?: string
+    type: "stop" | "map" | "my-location"
+}
+
+export const MyLocationSuggestion: SearchSuggestion = {
+    title: "My Location",
+    subtitle: "",
+    type: "my-location"
+}
